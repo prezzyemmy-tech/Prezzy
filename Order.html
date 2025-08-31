@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order - Prezzytoons Clothing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    header {
+      background: #0f1724;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .order-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .order-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #0f1724;
+    }
+
+    .order-container label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: 500;
+    }
+
+    .order-container input, 
+    .order-container select, 
+    .order-container textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    .total-price {
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: -10px;
+      margin-bottom: 20px;
+      color: #e63946;
+    }
+
+    .order-container button {
+      width: 100%;
+      padding: 12px;
+      background: #0f1724;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .order-container button:hover {
+      background: #1e2d46;
+    }
+
+    footer {
+      background: #0f1724;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Prezzytoons Clothing - Place Your Order
+  </header>
+
+  <div class="order-container">
+    <h2>Order Form</h2>
+    <form id="orderForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email address" required>
+
+      <label for="item">Select Item</label>
+      <select id="item" name="item" required>
+        <option value="" data-price="0">--Choose a clothing item--</option>
+        <option value="clothing1" data-price="5000">Prezzytoons Clothing 1 - ₦5,000</option>
+        <option value="clothing2" data-price="7000">Prezzytoons Clothing 2 - ₦7,000</option>
+      </select>
+
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+      <div class="total-price" id="totalPrice">Total: ₦0</div>
+
+      <label for="address">Shipping Address</label>
+      <textarea id="address" name="address" placeholder="Enter your shipping address" rows="4" required></textarea>
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Prezzytoons. All rights reserved.
+  </footer>
+
+  <script>
+    const itemSelect = document.getElementById('item');
+    const quantityInput = document.getElementById('quantity');
+    const totalPriceDiv = document.getElementById('totalPrice');
+
+    function updateTotal() {
+      const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+      const price = parseInt(selectedOption.getAttribute('data-price')) || 0;
+      const quantity = parseInt(quantityInput.value) || 0;
+      const total = price * quantity;
+      totalPriceDiv.textContent = `Total: ₦${total.toLocaleString()}`;
+    }
+
+    itemSelect.addEventListener('change', updateTotal);
+    quantityInput.addEventListener('input', updateTotal);
+
+    // Initialize total
+    updateTotal();
+
+    // Handle form submit
+    document.getElementById('orderForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      alert('✅ Thank you, your order has been submitted!\n' + totalPriceDiv.textContent);
+      this.reset();
+      updateTotal();
+    });
+  </script>
+
+</body>
+</html>
